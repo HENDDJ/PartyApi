@@ -1,0 +1,21 @@
+server:
+  port: 18082  # tomcat服务端口号
+  tomcat:
+    uri-encoding: utf-8
+spring:
+  profiles:
+    active: dev
+  application:
+    name: api-company
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+
+feign:
+  hystrix:
+    enabled: true

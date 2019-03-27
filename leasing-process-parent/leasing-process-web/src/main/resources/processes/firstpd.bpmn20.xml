@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath"
+             targetNamespace="http://www.activiti.org/processdef">
+    <process id="first" name="first" isExecutable="true">
+        <documentation>第一个流程定义</documentation>
+        <extensionElements>
+            <activiti:executionListener event="end" class="com.cloudkeeper.leasing.process.listener.EndListener"/>
+        </extensionElements>
+        <startEvent id="first_start" name="start"/>
+        <userTask id="first_task_business" name="task_business"/>
+        <sequenceFlow id="first_start_task_business" sourceRef="first_start" targetRef="first_task_business"/>
+        <userTask id="first_task_leader" name="task_leader"/>
+        <sequenceFlow id="first_task_business_task_leader" sourceRef="first_task_business" targetRef="first_task_leader"/>
+        <endEvent id="first_end" name="end">
+        </endEvent>
+        <sequenceFlow id="first_task_leader_end" sourceRef="first_task_leader" targetRef="first_end"/>
+    </process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_first">
+        <bpmndi:BPMNPlane bpmnElement="first" id="BPMNPlane_first">
+            <bpmndi:BPMNShape bpmnElement="first_start" id="BPMNShape_first_start">
+                <omgdc:Bounds height="30.0" width="30.0" x="90.0" y="150.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="first_task_business" id="BPMNShape_first_task_business">
+                <omgdc:Bounds height="80.0" width="100.0" x="160.0" y="125.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="first_task_leader" id="BPMNShape_first_task_leader">
+                <omgdc:Bounds height="80.0" width="100.0" x="300.0" y="125.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="first_end" id="BPMNShape_first_end">
+                <omgdc:Bounds height="30.0" width="30.0" x="440.0" y="150.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="first_start_task_business" id="BPMNEdge_first_start_task_business">
+                <omgdi:waypoint x="120.0" y="165.0"/>
+                <omgdi:waypoint x="160.0" y="165.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="first_start_task_leader" id="BPMNEdge_task_business_task_leader">
+                <omgdi:waypoint x="260.0" y="165.0"/>
+                <omgdi:waypoint x="300.0" y="165.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="first_task_business_end" id="BPMNEdge_first_task_business_end">
+                <omgdi:waypoint x="400.0" y="165.0"/>
+                <omgdi:waypoint x="440.0" y="165.0"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</definitions>

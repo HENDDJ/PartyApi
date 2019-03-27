@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!--<changeSet id="20180918-01" author="jerry">-->
+        <!--<comment>初始化 用户数据</comment>-->
+        <!--<sql>-->
+            <!--INSERT INTO `ck_id_principal` (`id`, `createdAt`, `modifiedAt`, `createdBy`, `modifiedBy`, `version`, `isDelete`, `code`, `name`, `password`, `mobile`, `email`) VALUES ('4f722cb9-86ff-499d-83ef-c691d0441104', '2018-09-20 12:00:00', '2018-09-20 12:00:00', NULL, NULL, '0', '0', 'admin', '管理员', '202cb962ac59075b964b07152d234b70', NULL, NULL);-->
+        <!--</sql>-->
+    <!--</changeSet>-->
+
+    <!--<changeSet id="20180918-02" author="jerry">-->
+        <!--<comment>初始化 组织数据</comment>-->
+        <!--<sql>-->
+            <!--INSERT INTO `ck_id_organization` (`id`, `createdAt`, `modifiedAt`, `createdBy`, `modifiedBy`, `version`, `isDelete`, `code`, `fullCode`, `name`, `parentId`, `type`, `sort`, `note`) VALUES ('82602aee-f0a9-4afe-af17-fd8030259200', '2018-09-27 16:55:28', '2018-09-27 16:55:28', '4f722cb9-86ff-499d-83ef-c691d0441104', '4f722cb9-86ff-499d-83ef-c691d0441104', '0', '0', 'root', '-root', '新光租赁', NULL, NULL, NULL, NULL);-->
+            <!--INSERT INTO `ck_id_organization` (`id`, `createdAt`, `modifiedAt`, `createdBy`, `modifiedBy`, `version`, `isDelete`, `code`, `fullCode`, `name`, `parentId`, `type`, `sort`, `note`) VALUES ('7ec900f8-3732-47c1-a057-163e4babf309', '2018-09-27 16:55:28', '2018-09-27 16:55:28', '4f722cb9-86ff-499d-83ef-c691d0441104', '4f722cb9-86ff-499d-83ef-c691d0441104', '0', '0', 'group', '-root-group', '集团本部', '82602aee-f0a9-4afe-af17-fd8030259200', 'COMPANY', '1', NULL);-->
+            <!--INSERT INTO `ck_id_organization` (`id`, `createdAt`, `modifiedAt`, `createdBy`, `modifiedBy`, `version`, `isDelete`, `code`, `fullCode`, `name`, `parentId`, `type`, `sort`, `note`) VALUES ('2e467364-0cf2-4f5b-a41a-c958fc4fd824', '2018-09-28 16:50:13', '2018-09-28 16:50:13', '4f722cb9-86ff-499d-83ef-c691d0441104', '4f722cb9-86ff-499d-83ef-c691d0441104', '0', '0', 'SRE', '-root-group-SRE', '运维部', '7ec900f8-3732-47c1-a057-163e4babf309', 'DEPT', '4', NULL);-->
+            <!--INSERT INTO `ck_id_organization` (`id`, `createdAt`, `modifiedAt`, `createdBy`, `modifiedBy`, `version`, `isDelete`, `code`, `fullCode`, `name`, `parentId`, `type`, `sort`, `note`) VALUES ('44aa8a40-8567-490d-8590-1b631cae6da2', '2018-09-28 16:50:54', '2018-09-28 16:50:54', '4f722cb9-86ff-499d-83ef-c691d0441104', '4f722cb9-86ff-499d-83ef-c691d0441104', '0', '0', 'super', '-root-group-SRE-super', '运维总监', '2e467364-0cf2-4f5b-a41a-c958fc4fd824', 'POSITION', '1', NULL);-->
+        <!--</sql>-->
+    <!--</changeSet>-->
+
+    <!--<changeSet id="20180918-03" author="jerry">-->
+        <!--<comment>初始化 角色数据</comment>-->
+        <!--<sql>-->
+            <!--INSERT INTO `ck_id_role` (`id`, `createdAt`, `modifiedAt`, `createdBy`, `modifiedBy`, `version`, `isDelete`, `code`, `name`, `note`) VALUES ('9a94f78c-ac07-4d44-aee1-796086571726', '2018-09-28 16:25:25', '2018-09-28 16:25:25', '4f722cb9-86ff-499d-83ef-c691d0441104', '4f722cb9-86ff-499d-83ef-c691d0441104', '0', '0', 'SUPER_ADMIN', '超级管理员', '我很厉害的，啥都可以看');-->
+        <!--</sql>-->
+    <!--</changeSet>-->
+
+    <!--<changeSet id="20180918-05" author="jerry">-->
+        <!--<comment>初始化 用户组织 数据</comment>-->
+        <!--<sql>-->
+            <!--INSERT INTO `ck_id_principal_organization` (`id`, `createdAt`, `modifiedAt`, `createdBy`, `modifiedBy`, `version`, `isDelete`, `principalId`, `organizationId`, `isPart`) VALUES ('5e610ba6-600d-4c20-939b-62648800d16d', '2018-09-29 09:59:42', '2018-09-29 09:59:42', '4f722cb9-86ff-499d-83ef-c691d0441104', '4f722cb9-86ff-499d-83ef-c691d0441104', '0', '0', '4f722cb9-86ff-499d-83ef-c691d0441104', '44aa8a40-8567-490d-8590-1b631cae6da2', '0');-->
+        <!--</sql>-->
+    <!--</changeSet>-->
+
+    <!--<changeSet id="20180918-06" author="jerry">-->
+        <!--<comment>初始化 组织角色 数据</comment>-->
+        <!--<sql>-->
+            <!--INSERT INTO `ck_id_organization_role` (`id`, `createdAt`, `modifiedAt`, `createdBy`, `modifiedBy`, `version`, `isDelete`, `organizationId`, `roleId`) VALUES ('3650c458-f3bd-40b8-a9f1-bbf3c0f0621e', '2018-09-29 10:00:15', '2018-09-29 10:00:15', '4f722cb9-86ff-499d-83ef-c691d0441104', '4f722cb9-86ff-499d-83ef-c691d0441104', '0', '0', '44aa8a40-8567-490d-8590-1b631cae6da2', '9a94f78c-ac07-4d44-aee1-796086571726');-->
+        <!--</sql>-->
+    <!--</changeSet>-->
+
+    <!--<changeSet id="20180918-07" author="jerry">-->
+        <!--<comment>初始化 角色菜单 数据</comment>-->
+        <!--<sql>-->
+            <!--INSERT INTO `ck_id_role_menu` (`id`, `createdAt`, `modifiedAt`, `createdBy`, `modifiedBy`, `version`, `isDelete`, `roleId`, `menuCode`) VALUES ('0a6c1310-a8dc-458c-88b3-e1794278b538', '2018-09-28 16:26:35', '2018-09-28 16:26:35', '4f722cb9-86ff-499d-83ef-c691d0441104', '4f722cb9-86ff-499d-83ef-c691d0441104', '0', '0', '9a94f78c-ac07-4d44-aee1-796086571726', 'system');-->
+            <!--INSERT INTO `ck_id_role_menu` (`id`, `createdAt`, `modifiedAt`, `createdBy`, `modifiedBy`, `version`, `isDelete`, `roleId`, `menuCode`) VALUES ('189f8e99-011a-4375-a350-87e581260237', '2018-09-28 16:26:35', '2018-09-28 16:26:35', '4f722cb9-86ff-499d-83ef-c691d0441104', '4f722cb9-86ff-499d-83ef-c691d0441104', '0', '0', '9a94f78c-ac07-4d44-aee1-796086571726', 'component-test2');-->
+            <!--INSERT INTO `ck_id_role_menu` (`id`, `createdAt`, `modifiedAt`, `createdBy`, `modifiedBy`, `version`, `isDelete`, `roleId`, `menuCode`) VALUES ('3bb83d70-694d-4ee8-a60d-f8b4278dac51', '2018-09-28 16:26:35', '2018-09-28 16:26:35', '4f722cb9-86ff-499d-83ef-c691d0441104', '4f722cb9-86ff-499d-83ef-c691d0441104', '0', '0', '9a94f78c-ac07-4d44-aee1-796086571726', 'component');-->
+            <!--INSERT INTO `ck_id_role_menu` (`id`, `createdAt`, `modifiedAt`, `createdBy`, `modifiedBy`, `version`, `isDelete`, `roleId`, `menuCode`) VALUES ('5ecd86dd-6e00-4694-8f5a-c8b11c19b1aa', '2018-09-28 16:26:35', '2018-09-28 16:26:35', '4f722cb9-86ff-499d-83ef-c691d0441104', '4f722cb9-86ff-499d-83ef-c691d0441104', '0', '0', '9a94f78c-ac07-4d44-aee1-796086571726', 'systemInfo-property');-->
+            <!--INSERT INTO `ck_id_role_menu` (`id`, `createdAt`, `modifiedAt`, `createdBy`, `modifiedBy`, `version`, `isDelete`, `roleId`, `menuCode`) VALUES ('5ffee7a5-9b3a-4b0d-8078-f46be2969d07', '2018-09-28 16:26:35', '2018-09-28 16:26:35', '4f722cb9-86ff-499d-83ef-c691d0441104', '4f722cb9-86ff-499d-83ef-c691d0441104', '0', '0', '9a94f78c-ac07-4d44-aee1-796086571726', 'platform');-->
+            <!--INSERT INTO `ck_id_role_menu` (`id`, `createdAt`, `modifiedAt`, `createdBy`, `modifiedBy`, `version`, `isDelete`, `roleId`, `menuCode`) VALUES ('61282add-4482-4d57-8245-60b6961d41fc', '2018-09-28 16:26:35', '2018-09-28 16:26:35', '4f722cb9-86ff-499d-83ef-c691d0441104', '4f722cb9-86ff-499d-83ef-c691d0441104', '0', '0', '9a94f78c-ac07-4d44-aee1-796086571726', 'systemInfo-lookup');-->
+            <!--INSERT INTO `ck_id_role_menu` (`id`, `createdAt`, `modifiedAt`, `createdBy`, `modifiedBy`, `version`, `isDelete`, `roleId`, `menuCode`) VALUES ('73fe03d1-7127-47cf-ae53-46a7a6486ad7', '2018-09-28 16:26:35', '2018-09-28 16:26:35', '4f722cb9-86ff-499d-83ef-c691d0441104', '4f722cb9-86ff-499d-83ef-c691d0441104', '0', '0', '9a94f78c-ac07-4d44-aee1-796086571726', 'system-resource');-->
+            <!--INSERT INTO `ck_id_role_menu` (`id`, `createdAt`, `modifiedAt`, `createdBy`, `modifiedBy`, `version`, `isDelete`, `roleId`, `menuCode`) VALUES ('86fbf66f-eff6-40a4-861f-c0fc04fa9129', '2018-09-28 16:26:35', '2018-09-28 16:26:35', '4f722cb9-86ff-499d-83ef-c691d0441104', '4f722cb9-86ff-499d-83ef-c691d0441104', '0', '0', '9a94f78c-ac07-4d44-aee1-796086571726', 'system-organization');-->
+            <!--INSERT INTO `ck_id_role_menu` (`id`, `createdAt`, `modifiedAt`, `createdBy`, `modifiedBy`, `version`, `isDelete`, `roleId`, `menuCode`) VALUES ('893ec91d-fd5c-4e44-8ac2-5c996510e5c6', '2018-09-28 16:26:35', '2018-09-28 16:26:35', '4f722cb9-86ff-499d-83ef-c691d0441104', '4f722cb9-86ff-499d-83ef-c691d0441104', '0', '0', '9a94f78c-ac07-4d44-aee1-796086571726', 'systemInfo');-->
+            <!--INSERT INTO `ck_id_role_menu` (`id`, `createdAt`, `modifiedAt`, `createdBy`, `modifiedBy`, `version`, `isDelete`, `roleId`, `menuCode`) VALUES ('9e48fd56-c3d0-4b86-b2bc-c7d9ebc9df15', '2018-09-28 16:26:35', '2018-09-28 16:26:35', '4f722cb9-86ff-499d-83ef-c691d0441104', '4f722cb9-86ff-499d-83ef-c691d0441104', '0', '0', '9a94f78c-ac07-4d44-aee1-796086571726', 'component-test');-->
+            <!--INSERT INTO `ck_id_role_menu` (`id`, `createdAt`, `modifiedAt`, `createdBy`, `modifiedBy`, `version`, `isDelete`, `roleId`, `menuCode`) VALUES ('c52994fe-4ce9-405a-aab3-7f1ea7c341d4', '2018-09-28 16:26:35', '2018-09-28 16:26:35', '4f722cb9-86ff-499d-83ef-c691d0441104', '4f722cb9-86ff-499d-83ef-c691d0441104', '0', '0', '9a94f78c-ac07-4d44-aee1-796086571726', 'component-upload');-->
+            <!--INSERT INTO `ck_id_role_menu` (`id`, `createdAt`, `modifiedAt`, `createdBy`, `modifiedBy`, `version`, `isDelete`, `roleId`, `menuCode`) VALUES ('ea142b20-e6f8-4f27-a4a5-04a7c9abf717', '2018-09-28 16:26:35', '2018-09-28 16:26:35', '4f722cb9-86ff-499d-83ef-c691d0441104', '4f722cb9-86ff-499d-83ef-c691d0441104', '0', '0', '9a94f78c-ac07-4d44-aee1-796086571726', 'system-user');-->
+            <!--INSERT INTO `ck_id_role_menu` (`id`, `createdAt`, `modifiedAt`, `createdBy`, `modifiedBy`, `version`, `isDelete`, `roleId`, `menuCode`) VALUES ('fc9e5375-32a4-43b2-9eff-12fa0b17ab67', '2018-09-28 16:26:35', '2018-09-28 16:26:35', '4f722cb9-86ff-499d-83ef-c691d0441104', '4f722cb9-86ff-499d-83ef-c691d0441104', '0', '0', '9a94f78c-ac07-4d44-aee1-796086571726', 'system-role');-->
+
+        <!--</sql>-->
+    <!--</changeSet>-->
+
+</databaseChangeLog>

@@ -1,0 +1,11 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.cloudkeeper.leasing.config.ProviderConfig",
+      "name": "zuul",
+      "type": "com.cloudkeeper.leasing.config.ProviderConfig"
+    }
+  ],
+  "properties": []
+}

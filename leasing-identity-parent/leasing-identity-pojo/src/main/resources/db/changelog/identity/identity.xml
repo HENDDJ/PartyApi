@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="20180918-16" author="jerry">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="ck_id_property_config"/>
+        </preConditions>
+        <dropTable tableName="ck_id_property_config"/>
+    </changeSet>
+
+    <changeSet id="20180918-14" author="jerry">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="ck_id_role_menu"/>
+        </preConditions>
+        <dropTable tableName="ck_id_role_menu"/>
+    </changeSet>
+
+    <changeSet id="20180918-12" author="jerry">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="ck_id_organization_role"/>
+        </preConditions>
+        <dropTable tableName="ck_id_organization_role"/>
+    </changeSet>
+
+    <changeSet id="20180918-10" author="jerry">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="ck_id_principal_organization"/>
+        </preConditions>
+        <dropTable tableName="ck_id_principal_organization"/>
+    </changeSet>
+
+    <changeSet id="20180918-06" author="jerry">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="ck_id_role"/>
+        </preConditions>
+        <dropTable tableName="ck_id_role"/>
+    </changeSet>
+
+    <changeSet id="20180918-04" author="jerry">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="ck_id_organization"/>
+        </preConditions>
+        <dropTable tableName="ck_id_organization"/>
+    </changeSet>
+
+    <changeSet id="20180918-02" author="jerry">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="ck_id_principal"/>
+        </preConditions>
+        <dropTable tableName="ck_id_principal"/>
+    </changeSet>
+
+    <changeSet id="20180918-01" author="jerry">
+        <comment>创建 用户</comment>
+        <createTable tableName="ck_id_principal">
+            <column name="id" type="varchar(36)" remarks="主键">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_ck_id_principal"/>
+            </column>
+            <column name="createdAt" type="datetime" remarks="创建时间"/>
+            <column name="modifiedAt" type="datetime" remarks="更新时间"/>
+            <column name="createdBy" type="varchar(36)" remarks="创建人"/>
+            <column name="modifiedBy" type="varchar(36)" remarks="更新人"/>
+            <column name="version" type="int" remarks="版本号"/>
+            <column name="isDelete" type="int" remarks="是否删除"/>
+            <column name="code" type="varchar(30)" remarks="登录名"/>
+            <column name="name" type="varchar(50)" remarks="姓名"/>
+            <column name="password" type="varchar(50)" remarks="密码"/>
+            <column name="mobile" type="varchar(11)" remarks="手机"/>
+            <column name="email" type="varchar(100)" remarks="邮箱"/>
+            <column name="note" type="varchar(1000)" remarks="描述"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="ck_id_principal"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20180918-03" author="jerry">
+        <comment>创建 组织</comment>
+        <createTable tableName="ck_id_organization">
+            <column name="id" type="varchar(36)" remarks="主键">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_ck_id_organization"/>
+            </column>
+            <column name="createdAt" type="datetime" remarks="创建时间"/>
+            <column name="modifiedAt" type="datetime" remarks="更新时间"/>
+            <column name="createdBy" type="varchar(36)" remarks="创建人"/>
+            <column name="modifiedBy" type="varchar(36)" remarks="更新人"/>
+            <column name="version" type="int" remarks="版本号"/>
+            <column name="isDelete" type="int" remarks="是否删除"/>
+            <column name="code" type="varchar(24)" remarks="编码"/>
+            <column name="fullCode" type="varchar(250)" remarks="全编码"/>
+            <column name="name" type="varchar(50)" remarks="名称"/>
+            <column name="parentId" type="varchar(36)" remarks="父id"/>
+            <column name="type" type="varchar(50)" remarks="组织类型"/>
+            <column name="sort" type="int" remarks="排序"/>
+            <column name="note" type="varchar(1000)" remarks="描述"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="ck_id_organization"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20180918-05" author="jerry">
+        <comment>创建 角色</comment>
+        <createTable tableName="ck_id_role">
+            <column name="id" type="varchar(36)" remarks="主键">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_ck_id_role"/>
+            </column>
+            <column name="createdAt" type="datetime" remarks="创建时间"/>
+            <column name="modifiedAt" type="datetime" remarks="更新时间"/>
+            <column name="createdBy" type="varchar(36)" remarks="创建人"/>
+            <column name="modifiedBy" type="varchar(36)" remarks="更新人"/>
+            <column name="version" type="int" remarks="版本号"/>
+            <column name="isDelete" type="int" remarks="是否删除"/>
+            <column name="code" type="varchar(50)" remarks="编码"/>
+            <column name="name" type="varchar(50)" remarks="名称"/>
+            <column name="note" type="varchar(1000)" remarks="描述"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="ck_id_role"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20180918-09" author="jerry">
+        <comment>创建 用户组织中间表</comment>
+        <createTable tableName="ck_id_principal_organization">
+            <column name="id" type="varchar(36)" remarks="主键">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_ck_id_principal_organization"/>
+            </column>
+            <column name="createdAt" type="datetime" remarks="创建时间"/>
+            <column name="modifiedAt" type="datetime" remarks="更新时间"/>
+            <column name="createdBy" type="varchar(36)" remarks="创建人"/>
+            <column name="modifiedBy" type="varchar(36)" remarks="更新人"/>
+            <column name="version" type="int" remarks="版本号"/>
+            <column name="isDelete" type="int" remarks="是否删除"/>
+            <column name="principalId" type="varchar(36)" remarks="用户id">
+                <constraints referencedTableName="ck_id_principal" referencedColumnNames="id" foreignKeyName="fk_ck_id_principal_organization_principal"/>
+            </column>
+            <column name="organizationId" type="varchar(36)" remarks="组织id">
+                <constraints referencedTableName="ck_id_organization" referencedColumnNames="id" foreignKeyName="fk_ck_id_principal_organization_organization"/>
+            </column>
+            <column name="isPart" type="int" remarks="是否兼职岗位"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="ck_id_principal_organization"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20180918-11" author="jerry">
+        <comment>创建 组织角色中间表</comment>
+        <createTable tableName="ck_id_organization_role">
+            <column name="id" type="varchar(36)" remarks="主键">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_ck_id_organization_role"/>
+            </column>
+            <column name="createdAt" type="datetime" remarks="创建时间"/>
+            <column name="modifiedAt" type="datetime" remarks="更新时间"/>
+            <column name="createdBy" type="varchar(36)" remarks="创建人"/>
+            <column name="modifiedBy" type="varchar(36)" remarks="更新人"/>
+            <column name="version" type="int" remarks="版本号"/>
+            <column name="isDelete" type="int" remarks="是否删除"/>
+            <column name="organizationId" type="varchar(36)" remarks="组织id">
+                <constraints referencedTableName="ck_id_organization" referencedColumnNames="id" foreignKeyName="fk_ck_id_organization_role_organization"/>
+            </column>
+            <column name="roleId" type="varchar(36)" remarks="角色id">
+                <constraints referencedTableName="ck_id_role" referencedColumnNames="id" foreignKeyName="fk_ck_id_organization_role_role"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="ck_id_organization_role"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20180918-13" author="jerry">
+        <comment>创建 角色菜单中间表</comment>
+        <createTable tableName="ck_id_role_menu">
+            <column name="id" type="varchar(36)" remarks="主键">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_ck_id_role_menu"/>
+            </column>
+            <column name="createdAt" type="datetime" remarks="创建时间"/>
+            <column name="modifiedAt" type="datetime" remarks="更新时间"/>
+            <column name="createdBy" type="varchar(36)" remarks="创建人"/>
+            <column name="modifiedBy" type="varchar(36)" remarks="更新人"/>
+            <column name="version" type="int" remarks="版本号"/>
+            <column name="isDelete" type="int" remarks="是否删除"/>
+            <column name="roleId" type="varchar(36)" remarks="角色id">
+                <constraints referencedTableName="ck_id_role" referencedColumnNames="id" foreignKeyName="fk_ck_id_role_menu_role"/>
+            </column>
+            <column name="menuCode" type="varchar(50)" remarks="菜单编码"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="ck_id_role_menu"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20180918-15" author="jerry">
+        <comment>创建系统属性表</comment>
+        <createTable tableName="ck_id_property_config">
+            <column name="id" type="varchar(36)" remarks="主键">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_ck_id_property_config"/>
+            </column>
+            <column name="createdAt" type="datetime" remarks="创建时间"/>
+            <column name="modifiedAt" type="datetime" remarks="更新时间"/>
+            <column name="createdBy" type="varchar(36)" remarks="创建人"/>
+            <column name="modifiedBy" type="varchar(36)" remarks="更新人"/>
+            <column name="version" type="int" remarks="版本号"/>
+            <column name="isDelete" type="int" remarks="是否删除"/>
+            <column name="name" type="varchar(50)" remarks="属性名称"/>
+            <column name="value" type="varchar(50)" remarks="属性值"/>
+            <column name="description" type="varchar(100)" remarks="属性说明"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="ck_id_property_config"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20181102-01" author="asher">
+        <comment>创建系统附件表</comment>
+        <createTable tableName="ck_id_accessory">
+            <column name="id" type="varchar(36)" remarks="主键">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pc_ck_id_accessory"/>
+            </column>
+            <column name="masterTableId" type="varchar(36)" remarks="附件所对应主表id"/>
+            <column name="masterObject" type="varchar(36)" remarks="主表对象"/>
+            <column name="type" type="varchar(36)" remarks="类别"/>
+            <column name="name" type="varchar(36)" remarks="附件名"/>
+            <column name="description" type="varchar(500)" remarks="描述"/>
+            <column name="path" type="varchar(500)" remarks="存储路径"/>
+            <column name="createdAt" type="datetime" remarks="创建时间"/>
+            <column name="modifiedAt" type="datetime" remarks="更新时间"/>
+            <column name="createdBy" type="varchar(36)" remarks="创建人"/>
+            <column name="modifiedBy" type="varchar(36)" remarks="更新人"/>
+            <column name="version" type="int" remarks="版本号"/>
+            <column name="isDelete" type="int" remarks="是否删除"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20181110-03" author="asher">
+        <comment>实体类表</comment>
+        <createTable tableName="sys_class">
+            <column name="id" type="varchar(36)" remarks="主键">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_sys_class"/>
+            </column>
+            <column name="name" type="varchar(36)" remarks="类名"/>
+            <column name="des" type="varchar(200)" remarks="类描述"/>
+            <column name="createdAt" type="datetime" remarks="创建时间"/>
+            <column name="modifiedAt" type="datetime" remarks="更新时间"/>
+            <column name="createdBy" type="varchar(36)" remarks="创建人"/>
+            <column name="modifiedBy" type="varchar(36)" remarks="更新人"/>
+            <column name="version" type="int" remarks="版本号"/>
+            <column name="isDelete" type="int" remarks="是否删除"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20181110-04" author="asher">
+        <comment>实体类属性配置表</comment>
+        <createTable tableName="sys_class_property">
+            <column name="id" type="varchar(36)" remarks="主键">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_sys_class_property"/>
+            </column>
+            <column name="classId" type="varchar(36)" remarks="类id">
+                <constraints referencedTableName="sys_class" referencedColumnNames="id" nullable="false" foreignKeyName="fk_sys_class_property"/>
+            </column>
+            <column name="name" type="varchar(36)" remarks="属性名"/>
+            <column name="type" type="varchar(50)" remarks="数据类型"/>
+            <column name="length" type="int" remarks="长度"/>
+            <column name="des" type="varchar(200)" remarks="属性描述"/>
+            <column name="createdAt" type="datetime" remarks="创建时间"/>
+            <column name="modifiedAt" type="datetime" remarks="更新时间"/>
+            <column name="createdBy" type="varchar(36)" remarks="创建人"/>
+            <column name="modifiedBy" type="varchar(36)" remarks="更新人"/>
+            <column name="version" type="int" remarks="版本号"/>
+            <column name="isDelete" type="int" remarks="是否删除"/>
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="20181110-01" author="asher">
+        <comment>系统路由配置表</comment>
+        <createTable tableName="sys_routes">
+            <column name="id" type="varchar(36)" remarks="主键">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_sys_routes"/>
+            </column>
+            <column name="parentId" type="varchar(36)" remarks="父路由id">
+                <constraints referencedTableName="sys_routes" referencedColumnNames="id" nullable="true" foreignKeyName="fk_routes"/>
+            </column>
+            <column name="classId" type="varchar(36)" remarks="类id">
+                <constraints referencedTableName="sys_class" referencedColumnNames="id" nullable="false" foreignKeyName="fk_sys_class_route"/>
+            </column>
+            <column name="name" type="varchar(36)" remarks="路由名称"/>
+            <column name="path" type="varchar(200)" remarks="路由访问url地址"/>
+            <column name="component" type="varchar(50)" remarks="组件名"/>
+            <column name="des" type="varchar(200)" remarks="路由描述"/>
+            <column name="createdAt" type="datetime" remarks="创建时间"/>
+            <column name="modifiedAt" type="datetime" remarks="更新时间"/>
+            <column name="createdBy" type="varchar(36)" remarks="创建人"/>
+            <column name="modifiedBy" type="varchar(36)" remarks="更新人"/>
+            <column name="version" type="int" remarks="版本号"/>
+            <column name="isDelete" type="int" remarks="是否删除"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20181110-02" author="asher">
+        <comment>路由meta表</comment>
+        <createTable tableName="sys_routes_meta">
+            <column name="id" type="varchar(36)" remarks="主键">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_sys_routes_meta"/>
+            </column>
+            <column name="routeId" type="varchar(36)" remarks="路由id"/>
+            <column name="title" type="varchar(36)" remarks="标题"/>
+            <column name="icon" type="varchar(36)" remarks="图标"/>
+            <column name="createdAt" type="datetime" remarks="创建时间"/>
+            <column name="modifiedAt" type="datetime" remarks="更新时间"/>
+            <column name="createdBy" type="varchar(36)" remarks="创建人"/>
+            <column name="modifiedBy" type="varchar(36)" remarks="更新人"/>
+            <column name="version" type="int" remarks="版本号"/>
+            <column name="isDelete" type="int" remarks="是否删除"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20181113-01" author="asher">
+        <comment>修改字段名</comment>
+        <dropColumn tableName="sys_routes" columnName="component"/>
+        <addColumn tableName="sys_routes">
+            <column name="componentName" type="varchar(36)" remarks="组件名"/>
+        </addColumn>
+    </changeSet>
+    
+    <changeSet id="20181126-01" author="asher">
+        <comment>属性可能为对象，统一遍历渲染</comment>
+        <addColumn tableName="sys_class_property">
+            <column name="isObject" type="int"/>
+            <column name="objectId" type="varchar(36)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20181126-02" author="asher">
+        <comment>属性排序</comment>
+        <addColumn tableName="sys_class_property">
+            <column name="sort" type="int"/>
+        </addColumn>
+    </changeSet>
+    
+
+
+</databaseChangeLog>

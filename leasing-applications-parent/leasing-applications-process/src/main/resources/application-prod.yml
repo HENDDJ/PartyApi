@@ -1,0 +1,91 @@
+spring:
+  # 数据库配置
+  datasource:
+    # 连接地址
+    url: jdbc:mysql://localhost:3306/leasing-boot-prod?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    # 用户名
+    username: root
+    # 密码
+    password: root
+    # 驱动类型
+    driver-class-name: com.mysql.jdbc.Driver
+    # 连接池类型
+    type: com.alibaba.druid.pool.DruidDataSource
+
+    # 下面为连接池的补充设置，应用到上面所有数据源中
+    # 参考网站：https://github.com/alibaba/druid/tree/master/druid-spring-boot-starter
+    druid:
+      # 初始化连接池的连接数量 大小，最小，最大
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 30000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      # 是否缓存preparedStatement，也就是PSCache  官方建议MySQL下建议关闭   个人建议如果想用SQL防火墙 建议打开
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,slf4j
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      # 合并多个DruidDataSource的监控数据
+      #use-global-data-source-stat: true
+      # ！！！请勿配置timeBetweenLogStatsMillis 会定时输出日志 并导致统计的sql清零
+      #timeBetweenLogStatsMillis=20000
+
+      # WebStatFilter配置，说明请参考Druid Wiki，配置_配置WebStatFilter
+      web-stat-filter:
+        #是否启用StatFilter默认值true
+        enabled: true
+        #url-pattern:
+        exclusions: /druid/*,*.js,*.gif,*.jpg,*.png,*.css,*.ico
+
+      # StatViewServlet配置，说明请参考Druid Wiki，配置_StatViewServlet配置
+      stat-view-servlet:
+        #是否启用StatViewServlet默认值true
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: false
+        login-username: admin
+        login-password: 123456
+
+  # jpa 配置
+  jpa:
+    # 数据库类型 mysql
+    database: mysql
+    # 是否显示 sql语句
+    show-sql: true
+    # hibernate 配置
+    hibernate:
+      naming:
+        # 数据库表字段和实体字段名称对应实现类
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      # 表更新策略
+      ddl-auto: none
+    #数据库方言
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+
+  # activiti 6
+  activiti:
+  #    校验流程文件，并自动部署，默认校验resources下的processes文件夹里的流程文件
+    check-process-definitions: true
+  #    flase： 默认值。activiti在启动时，会对比数据库表中保存的版本，如果没有表或者版本不匹配，将抛出异常。
+  #    true： activiti会对数据库中所有表进行更新操作。如果表不存在，则自动创建。
+  #    create_drop： 在activiti启动时创建表，在关闭时删除表（必须手动关闭引擎，才能删除表）。
+  #    drop-create： 在activiti启动时删除原来的旧表，然后在创建新表（不需要手动关闭引擎）。
+    database-schema-update: true
+
+  # liquibase 配置
+  liquibase:
+    # sql语句存放位置
+    change-log: classpath:/db/changelog/master.xml
+    enabled: true
+

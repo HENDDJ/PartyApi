@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="20180918-02" author="jerry">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="l_cp_customer"/>
+        </preConditions>
+        <dropTable tableName="l_cp_customer"/>
+    </changeSet>
+
+    <changeSet id="20180918-01" author="jerry">
+        <comment>创建 客户</comment>
+        <createTable tableName="l_cp_customer">
+            <column name="id" type="varchar(36)" remarks="主键">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_l_cp_customer"/>
+            </column>
+            <column name="createdAt" type="datetime" remarks="创建时间"/>
+            <column name="modifiedAt" type="datetime" remarks="更新时间"/>
+            <column name="createdBy" type="varchar(36)" remarks="创建人"/>
+            <column name="modifiedBy" type="varchar(36)" remarks="更新人"/>
+            <column name="version" type="int" remarks="版本号"/>
+            <column name="isDelete" type="int" remarks="是否删除"/>
+            <column name="code" type="varchar(18)" remarks="统一信用代码"/>
+            <column name="name" type="varchar(50)" remarks="客户名称"/>
+            <column name="note" type="varchar(1000)" remarks="描述"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="l_cp_customer"/>
+        </rollback>
+    </changeSet>
+
+    <!--<changeSet id="20181022-01" author="asher">-->
+        <!--<comment>删除原有客户表</comment>-->
+        <!--<dropTable tableName="l_cp_customer"/>-->
+    <!--</changeSet>-->
+
+    <changeSet id="20181022-02" author="asher">
+        <comment>车辆信息表</comment>
+        <createTable tableName="cp_vehicles">
+            <column name="id" type="varchar(36)" remarks="主键">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_cp_vehicle"/>
+            </column>
+            <column name="licensePlate" type="varchar(36)" remarks="车牌号码"/>
+            <column name="maximumPassenger" type="int" remarks="最大载客数"/>
+            <column name="model" type="varchar(100)" remarks="型号" />
+            <column name="createdAt" type="datetime" remarks="创建时间"/>
+            <column name="modifiedAt" type="datetime" remarks="更新时间"/>
+            <column name="createdBy" type="varchar(36)" remarks="创建人"/>
+            <column name="modifiedBy" type="varchar(36)" remarks="更新人"/>
+            <column name="version" type="int" remarks="版本号"/>
+            <column name="isDelete" type="int" remarks="是否删除"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="cp_vehicles"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20181022-03" author="asher">
+        <comment>司机信息表</comment>
+        <createTable tableName="cp_drivers">
+            <column name="id" type="varchar(36)" remarks="主键">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_cp_drivers"/>
+            </column>
+            <column name="name" type="varchar(36)" remarks="姓名"/>
+            <column name="mobileNumbers" type="varchar(11)" remarks="手机号"/>
+            <column name="licenseNumbers" type="varchar(50)" remarks="驾驶证号"/>
+            <column name="createdAt" type="datetime" remarks="创建时间"/>
+            <column name="modifiedAt" type="datetime" remarks="更新时间"/>
+            <column name="createdBy" type="varchar(36)" remarks="创建人"/>
+            <column name="modifiedBy" type="varchar(36)" remarks="更新人"/>
+            <column name="version" type="int" remarks="版本号"/>
+            <column name="isDelete" type="int" remarks="是否删除"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="cp_drivers"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20181022-04" author="asher">
+        <comment>出勤信息表</comment>
+        <createTable tableName="cp_attendances">
+            <column name="id" type="varchar(36)" remarks="主键">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_cp_attendances"/>
+            </column>
+            <column name="vehiclesId" type="varchar(36)" remarks="外键至车辆信息表">
+                <constraints referencedTableName="cp_vehicles" referencedColumnNames="id" foreignKeyName="fk_attendances_vehicles"/>
+            </column>
+            <column name="driversId" type="varchar(36)" remarks="外键至司机信息表">
+                <constraints referencedTableName="cp_drivers" referencedColumnNames="id" foreignKeyName="fk_attendances_drivers"/>
+            </column>
+            <column name="itemId" type="varchar(36)" remarks="外键至业务表"/>
+            <column name="cause" type="varchar(200)" remarks="事由"/>
+            <column name="startTime" type="datetime" remarks="出勤开始时间"/>
+            <column name="endTime" type="datetime" remarks="出勤结束时间"/>
+            <column name="startMileage" type="varchar(36)" remarks="起始里程"/>
+            <column name="endMileage" type="varchar(36)" remarks="结束里程"/>
+            <column name="createdAt" type="datetime" remarks="创建时间"/>
+            <column name="modifiedAt" type="datetime" remarks="更新时间"/>
+            <column name="createdBy" type="varchar(36)" remarks="创建人"/>
+            <column name="modifiedBy" type="varchar(36)" remarks="更新人"/>
+            <column name="version" type="int" remarks="版本号"/>
+            <column name="isDelete" type="int" remarks="是否删除"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="cp_attendances"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20181022-05" author="asher">
+        <comment>意向客户表</comment>
+        <createTable tableName="cp_intentional_customers">
+            <column name="id" type="varchar(36)" remarks="主键">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_cp_intentional_customers"/>
+            </column>
+            <column name="name" type="varchar(100)" remarks="客户名称"/>
+            <column name="uniformCreditCode" type="varchar(100)" remarks="统一信用代码"/>
+            <column name="industryType" type="varchar(100)" remarks="行业分类"/>
+            <column name="contact" type="varchar(100)" remarks="联系人"/>
+            <column name="area" type="varchar(100)" remarks="客户区域"/>
+            <column name="contactInfo" type="varchar(100)" remarks="联系方式"/>
+            <column name="grade" type="varchar(100)" remarks="客户等级"/>
+            <column name="post" type="varchar(100)" remarks="职务"/>
+            <column name="createdAt" type="datetime" remarks="创建时间"/>
+            <column name="modifiedAt" type="datetime" remarks="更新时间"/>
+            <column name="createdBy" type="varchar(36)" remarks="创建人"/>
+            <column name="modifiedBy" type="varchar(36)" remarks="更新人"/>
+            <column name="version" type="int" remarks="版本号"/>
+            <column name="isDelete" type="int" remarks="是否删除"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="cp_intentional_customers"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20181023-01" author="asher">
+        <comment>拜访计划表</comment>
+        <createTable tableName="cp_visit_plan">
+            <column name="id" type="varchar(36)">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_cp_visit_plan"/>
+            </column>
+            <column name="startTime" type="datetime" remarks="开始时间"/>
+            <column name="endTime" type="datetime" remarks="结束时间"/>
+            <column name="source" type="varchar(100)" remarks="客户来源"/>
+            <column name="purpose" type="varchar(100)" remarks="拜访目的"/>
+            <column name="province" type="varchar(100)" remarks="拜访区域（省份）"/>
+            <column name="city" type="varchar(100)" remarks="拜访区域（城市）"/>
+            <column name="itemId" type="varchar(36)" remarks="业务id"/>
+            <column name="isEntrust" type="int" remarks="是否委托同仁"/>
+            <column name="isAccompany" type="int" remarks="是否主管陪同"/>
+            <column name="mandataryId" type="varchar(36)" remarks="被委托人">
+                <constraints nullable="true" referencedTableName="ck_id_principal" referencedColumnNames="id" foreignKeyName="fk_visit_plan_principal"/>
+            </column>
+            <column name="note" type="varchar(1000)" remarks="备注"/>
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="20181101-01" author="asher">
+        <comment>修改出勤表开始里程、结束里程量字段数据类型</comment>
+        <modifyDataType tableName="cp_attendances" columnName="startMileage" newDataType="double"/>
+        <modifyDataType tableName="cp_attendances" columnName="endMileage" newDataType="double"/>
+    </changeSet>
+
+    <changeSet id="20181022-06" author="asher">
+        <comment>客户、担保公司、供应商父表</comment>
+        <createTable tableName="cp_common_company">
+            <column name="id" type="varchar(36)" remarks="主键">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_cp_common_company"/>
+            </column>
+            <column name="intentionalCustomersId" type="varchar(36)" remarks="外键至意向客户表">
+                <constraints referencedTableName="cp_intentional_customers" referencedColumnNames="id" foreignKeyName="fk_cc_i_customers" nullable="true"/>
+            </column>
+            <column name="name" type="varchar(100)" remarks="公司名称"/>
+            <column name="uniformCreditCode" type="varchar(100)" remarks="统一信用代码"/>
+            <column name="capitalType" type="varchar(100)" remarks="资本类型"/>
+            <column name="registeredFund" type="double(12,4)" remarks="注册资金"/>
+            <column name="paidCapital" type="double(12,4)" remarks="实收资金"/>
+            <column name="country" type="varchar(36)" remarks="国别"/>
+            <column name="currency" type="varchar(36)" remarks="币别"/>
+            <column name="province" type="varchar(36)" remarks="注册地址--省"/>
+            <column name="city" type="varchar(36)" remarks="注册地址--市"/>
+            <column name="detailAddress" type="varchar(200)" remarks="注册地址--详细地址"/>
+            <column name="businessProvince" type="varchar(36)" remarks="注册地址--省"/>
+            <column name="businessCity" type="varchar(36)" remarks="注册地址--市"/>
+            <column name="businessDetailAddress" type="varchar(200)" remarks="注册地址--详细地址"/>
+            <column name="establishAt" type="datetime" remarks="成立日期" />
+            <column name="operateStart" type="datetime" remarks="营业期限--开始"/>
+            <column name="operateEnd" type="datetime" remarks="营业期限--结束"/>
+            <column name="category" type="varchar(36)" remarks="行业分类"/>
+            <column name="mainBusiness" type="varchar(500)" remarks="主营业务"/>
+            <column name="createdAt" type="datetime" remarks="创建时间"/>
+            <column name="modifiedAt" type="datetime" remarks="更新时间"/>
+            <column name="createdBy" type="varchar(36)" remarks="创建人"/>
+            <column name="modifiedBy" type="varchar(36)" remarks="更新人"/>
+            <column name="version" type="int" remarks="版本（乐观锁）"/>
+            <column name="isDelete" type="int" remarks="逻辑删除"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20181024-01" author="asher">
+        <comment>客户表</comment>
+        <createTable tableName="cp_customer">
+            <column name="id" type="varchar(36)" remarks="主键">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_cp_customer"/>
+            </column>
+            <column name="parentId" type="varchar(36)" remarks="公司父表id">
+                <constraints nullable="false" referencedTableName="cp_common_company" referencedColumnNames="id" foreignKeyName="fk_cc_company"/>
+            </column>
+            <column name="staffNumber" type="int" remarks="职工人数"/>
+            <column name="bankName" type="varchar(36)" remarks="银行名称"/>
+            <column name="bankAccount" type="varchar(36)" remarks="银行账户"/>
+            <column name="phoneNumber" type="varchar(36)" remarks="公司电话"/>
+            <column name="factoryProvince" type="varchar(36)" remarks="工厂地址--省"/>
+            <column name="factoryCity" type="varchar(36)" remarks="工厂地址--市"/>
+            <column name="factoryDetailAddress" type="varchar(200)" remarks="工厂地址--详细地址"/>
+            <column name="createdAt" type="datetime" remarks="创建时间"/>
+            <column name="modifiedAt" type="datetime" remarks="更新时间"/>
+            <column name="createdBy" type="varchar(36)" remarks="创建人"/>
+            <column name="modifiedBy" type="varchar(36)" remarks="更新人"/>
+            <column name="version" type="int" remarks="版本（乐观锁）"/>
+            <column name="isDelete" type="int" remarks="逻辑删除"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20181024-02" author="asher">
+        <comment>担保公司</comment>
+        <createTable tableName="cp_guarantee_company">
+            <column name="id" type="varchar(36)" remarks="主键">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_cp_guarantee_company"/>
+            </column>
+            <column name="parentId" type="varchar(36)" remarks="公司父表id">
+                <constraints nullable="false" referencedTableName="cp_common_company" referencedColumnNames="id" foreignKeyName="fk_cc_guarantee"/>
+            </column>
+            <column name="staffNumber" type="int" remarks="职工人数"/>
+            <column name="bankName" type="varchar(36)" remarks="银行名称"/>
+            <column name="bankAccount" type="varchar(36)" remarks="银行账户"/>
+            <column name="createdAt" type="datetime" remarks="创建时间"/>
+            <column name="modifiedAt" type="datetime" remarks="更新时间"/>
+            <column name="createdBy" type="varchar(36)" remarks="创建人"/>
+            <column name="modifiedBy" type="varchar(36)" remarks="更新人"/>
+            <column name="version" type="int" remarks="版本（乐观锁）"/>
+            <column name="isDelete" type="int" remarks="逻辑删除"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20181024-03" author="asher">
+        <comment>供应商</comment>
+        <createTable tableName="cp_supplier">
+            <column name="id" type="varchar(36)" remarks="主键">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_cp_supplier_company"/>
+            </column>
+            <column name="parentId" type="varchar(36)" remarks="公司父表id">
+                <constraints nullable="false" referencedTableName="cp_common_company" referencedColumnNames="id" foreignKeyName="fk_cc_supplier"/>
+            </column>
+            <column name="category" type="varchar(36)" remarks="供应商类别"/>
+            <column name="createdAt" type="datetime" remarks="创建时间"/>
+            <column name="modifiedAt" type="datetime" remarks="更新时间"/>
+            <column name="createdBy" type="varchar(36)" remarks="创建人"/>
+            <column name="modifiedBy" type="varchar(36)" remarks="更新人"/>
+            <column name="version" type="int" remarks="版本（乐观锁）"/>
+            <column name="isDelete" type="int" remarks="逻辑删除"/>
+        </createTable>
+    </changeSet>
+
+    <!--<changeSet id="20181024-04" author="asher">-->
+        <!--<comment>公司相关法人、联系人、股东、董事表</comment>-->
+        <!--<createTable tableName="cp_main_principal">-->
+            <!--<column name="id" type="varchar(36)" remarks="主键">-->
+                <!--<constraints primaryKey="true" nullable="false" primaryKeyName="pk_cp_main_principal"/>-->
+            <!--</column>-->
+            <!--<column name=""-->
+        <!--</createTable>-->
+    <!--</changeSet>-->
+
+
+</databaseChangeLog>

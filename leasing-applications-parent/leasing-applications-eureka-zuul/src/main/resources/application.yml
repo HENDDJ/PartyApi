@@ -1,0 +1,40 @@
+server:
+  port: 8762
+spring:
+  application:
+    name: zuul
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance: #eureka server 页面列表字段 status 显示ip
+      prefer-ip-address: true
+      instance-id: ${spring.cloud.client.ip-address}:${server.port}
+
+zuul:
+  prefix: /api
+  routes:
+    api-identity:
+      path: /identity/**
+      serviceId: api-identity
+      sensitive-headers:
+      custom-sensitive-headers: true
+    api-company:
+      path: /company/**
+      serviceId: api-company
+      sensitive-headers:
+      custom-sensitive-headers: true
+#  sensitive-headers:
+
+ribbon:
+  ReadTimeout: 100000  # 单位毫秒数
+  SocketTimeout: 100000
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 250000
