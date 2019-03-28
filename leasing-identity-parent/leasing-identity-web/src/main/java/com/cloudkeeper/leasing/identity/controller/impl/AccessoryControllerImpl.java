@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,14 +44,14 @@ public class AccessoryControllerImpl implements AccessoryController {
     }
 
     @Override
-    public Result<AccessoryVO> add(@ApiParam(value = "系统附件 DTO", required = true) AccessoryDTO accessoryDTO, @RequestParam("file") MultipartFile file) {
+    public Result<AccessoryVO> add(@ApiParam(value = "系统附件 DTO", required = true) AccessoryDTO accessoryDTO, @RequestParam("file") MultipartFile file) throws IOException {
         Accessory accessory = accessoryService.save(accessoryDTO.convert(Accessory.class), file);
         return Result.ofAddSuccess(accessory.convert(AccessoryVO.class));
     }
 
     @Override
     public Result<AccessoryVO> update(@ApiParam(value = "系统附件id", required = true) @PathVariable String id,
-        @ApiParam(value = "系统附件 DTO", required = true) @RequestBody @Validated AccessoryDTO accessoryDTO) {
+                                      @ApiParam(value = "系统附件 DTO", required = true) @RequestBody @Validated AccessoryDTO accessoryDTO) {
         Optional<Accessory> accessoryOptional = accessoryService.findOptionalById(id);
         if (!accessoryOptional.isPresent()) {
             return Result.ofLost();
@@ -69,7 +70,7 @@ public class AccessoryControllerImpl implements AccessoryController {
 
     @Override
     public Result<List<AccessoryVO>> list(@ApiParam(value = "系统附件查询条件", required = true) @RequestBody AccessorySearchable accessorySearchable,
-        @ApiParam(value = "排序条件", required = true) Sort sort) {
+                                          @ApiParam(value = "排序条件", required = true) Sort sort) {
         List<Accessory> accessoryList = accessoryService.findAll(accessorySearchable, sort);
         List<AccessoryVO> accessoryVOList = Accessory.convert(accessoryList, AccessoryVO.class);
         return Result.of(accessoryVOList);
@@ -77,7 +78,7 @@ public class AccessoryControllerImpl implements AccessoryController {
 
     @Override
     public Result<Page<AccessoryVO>> page(@ApiParam(value = "系统附件查询条件", required = true) @RequestBody AccessorySearchable accessorySearchable,
-        @ApiParam(value = "分页参数", required = true) Pageable pageable) {
+                                          @ApiParam(value = "分页参数", required = true) Pageable pageable) {
         Page<Accessory> accessoryPage = accessoryService.findAll(accessorySearchable, pageable);
         Page<AccessoryVO> accessoryVOPage = Accessory.convert(accessoryPage, AccessoryVO.class);
         return Result.of(accessoryVOPage);
@@ -88,6 +89,16 @@ public class AccessoryControllerImpl implements AccessoryController {
     public void download(@PathVariable String id, HttpServletResponse response) throws IOException {
         Accessory accessory = accessoryService.findById(id);
         accessoryService.download(accessory, response);
+    }
+
+    @Override
+    public Result<List<AccessoryVO>> addList(@ApiParam(value = "系统附件 DTO", required = true) List<AccessoryDTO> accessoryDTOs, @RequestParam("files") MultipartFile[] files) throws IOException {
+        List<AccessoryVO> accessoryVOS = new ArrayList<>();
+        for (int i = 0; i < accessoryDTOs.size(); i++){
+            Accessory accessory = accessoryService.save(accessoryDTOs.get(i).convert(Accessory.class), files[i]);
+            accessoryVOS.add(accessory.convert(AccessoryVO.class));
+        }
+        return Result.ofAddSuccess(accessoryVOS);
     }
 
 

@@ -21,7 +21,7 @@ public interface AccessoryService extends BaseService<Accessory> {
      * @param multipartFile 文件
      * @return 记录
      */
-    Accessory save(@Nonnull Accessory accessory, MultipartFile multipartFile);
+    Accessory save(@Nonnull Accessory accessory, MultipartFile multipartFile) throws IOException;
 
     /**
      * 根据记录删除文件

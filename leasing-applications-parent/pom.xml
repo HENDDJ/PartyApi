@@ -19,7 +19,7 @@
     <modules>
         <module>leasing-applications-eureka-server</module>
         <module>leasing-applications-eureka-zuul</module>
-        
+
         <module>leasing-applications-config</module>
         <module>leasing-applications-process</module>
         <module>leasing-applications-identity</module>

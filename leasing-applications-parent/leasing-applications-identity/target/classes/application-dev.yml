@@ -106,3 +106,10 @@ spring:
       redis:
 #        use-key-prefix: true
         time-to-live: 1d
+fdfs:
+  soTimeout: 500
+  connectTimeout: 600
+  thumbImage:             #缩略图生成参数
+    width: 150
+    height: 150
+  trackerList: 172.16.0.199:22122

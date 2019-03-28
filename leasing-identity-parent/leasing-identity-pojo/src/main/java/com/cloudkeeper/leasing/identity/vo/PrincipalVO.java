@@ -22,6 +22,10 @@ public class PrincipalVO extends BaseVO {
     @ApiModelProperty(value = "登录名", position = 10)
     private String code;
 
+    /** 头像*/
+    @ApiModelProperty(value = "头像", position = 20)
+    private String photo;
+
     /** 姓名*/
     @ApiModelProperty(value = "姓名", position = 12)
     private String name;

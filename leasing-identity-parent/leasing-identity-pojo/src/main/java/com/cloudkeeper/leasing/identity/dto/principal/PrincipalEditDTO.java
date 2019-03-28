@@ -31,6 +31,9 @@ public class PrincipalEditDTO extends BaseEditDTO {
     @ApiModelProperty(value = "手机", position = 16)
     @Pattern(regexp = RegConstants.PHONE_NUMBER, message = "手机号不正确")
     private String mobile;
+    /** 头像 */
+    @ApiModelProperty(value = "头像", position = 20)
+    private String photo;
 
     /** 邮箱*/
     @ApiModelProperty(value = "邮箱", position = 18)

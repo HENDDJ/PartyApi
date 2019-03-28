@@ -12,17 +12,17 @@
 
     <parent>
         <groupId>com.cloudkeeper.leasing</groupId>
-    <artifactId>leasing-rest-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-</parent>
+        <artifactId>leasing-rest-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
 
-<modules>
-<module>leasing-identity-pojo</module>
-<module>leasing-identity-service</module>
-<module>leasing-identity-web</module>
-</modules>
+    <modules>
+        <module>leasing-identity-pojo</module>
+        <module>leasing-identity-service</module>
+        <module>leasing-identity-web</module>
+    </modules>
 
-<dependencies>
-</dependencies>
+    <dependencies>
+    </dependencies>
 
 </project>

@@ -42,7 +42,7 @@ public interface AccessoryController {
      */
     @ApiOperation(value = "新增", notes = "新增", position = 2)
     @PostMapping("/")
-    Result<AccessoryVO> add(@ApiParam(value = "系统附件 DTO", required = true) AccessoryDTO accessoryDTO, MultipartFile file);
+    Result<AccessoryVO> add(@ApiParam(value = "系统附件 DTO", required = true) AccessoryDTO accessoryDTO, MultipartFile file) throws IOException;
 
     /**
      * 更新
@@ -53,7 +53,7 @@ public interface AccessoryController {
     @ApiOperation(value = "更新", notes = "更新", position = 3)
     @PutMapping("/{id}id")
     Result<AccessoryVO> update(@ApiParam(value = "系统附件id", required = true) @PathVariable String id,
-        @ApiParam(value = "系统附件 DTO", required = true) @RequestBody @Validated AccessoryDTO accessoryDTO);
+                               @ApiParam(value = "系统附件 DTO", required = true) @RequestBody @Validated AccessoryDTO accessoryDTO);
 
     /**
      * 删除
@@ -73,7 +73,7 @@ public interface AccessoryController {
     @ApiOperation(value = "列表查询", notes = "列表查询<br/>sort：排序字段，默认是asc排序方式，可以不写，格式：sort=code,asc&sort=name&sort=note,desc", position = 5)
     @PostMapping("/list")
     Result<List<AccessoryVO>> list(@ApiParam(value = "系统附件查询条件", required = true) @RequestBody AccessorySearchable accessorySearchable,
-        @ApiParam(value = "排序条件", required = true) Sort sort);
+                                   @ApiParam(value = "排序条件", required = true) Sort sort);
 
     /**
      * 分页查询
@@ -84,7 +84,7 @@ public interface AccessoryController {
     @ApiOperation(value = "分页查询", notes = "分页查询<br/>page：第几页，默认为0，是第一页<br/>size：分页大小, 默认为10<br/>sort：排序字段，默认是asc排序方式，可以不写，格式：sort=code,asc&sort=name&sort=note,desc", position = 6)
     @PostMapping("/page")
     Result<Page<AccessoryVO>> page(@ApiParam(value = "系统附件查询条件", required = true) @RequestBody AccessorySearchable accessorySearchable,
-        @ApiParam(value = "分页参数", required = true) Pageable pageable);
+                                   @ApiParam(value = "分页参数", required = true) Pageable pageable);
 
     /**
      * 文件下载
@@ -95,4 +95,8 @@ public interface AccessoryController {
      */
     @GetMapping(value = "/download/{id}")
     void download(@PathVariable("id") String id, HttpServletResponse response) throws IOException;
+
+    @PostMapping(value = "/batch")
+    @ApiOperation(value = "批量上传", notes = "批量上传", position = 6)
+    Result<List<AccessoryVO>> addList(@ApiParam(value = "系统附件 DTO", required = true) List<AccessoryDTO> accessoryDTOs, @RequestParam("files") MultipartFile[] files) throws IOException;
 }

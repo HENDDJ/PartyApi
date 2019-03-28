@@ -9,8 +9,10 @@ import com.cloudkeeper.leasing.identity.dto.accessory.AccessorySearchable;
 import com.cloudkeeper.leasing.identity.dto.propertyconfiguration.PropertyConfigurationSearchable;
 import com.cloudkeeper.leasing.identity.repository.AccessoryRepository;
 import com.cloudkeeper.leasing.identity.service.AccessoryService;
+import com.cloudkeeper.leasing.identity.service.FdfsService;
 import com.cloudkeeper.leasing.identity.service.PropertyConfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
@@ -41,6 +43,11 @@ public class AccessoryServiceImpl extends BaseServiceImpl<Accessory> implements 
     @Autowired
     private PropertyConfigurationService propertyConfigurationService;
 
+    /** 系统配置Service*/
+    @Autowired
+    @Qualifier("fdfsServiceImpl")
+    private FdfsService fdfsServiceImpl;
+
     @Override
     protected BaseRepository<Accessory> getBaseRepository() {
         return accessoryRepository;
@@ -57,19 +64,9 @@ public class AccessoryServiceImpl extends BaseServiceImpl<Accessory> implements 
     }
 
     @Override
-    public Accessory save(@Nonnull Accessory entity, MultipartFile multipartFile) {
+    public Accessory save(@Nonnull Accessory entity, MultipartFile multipartFile) throws IOException {
         entity.setName(multipartFile.getOriginalFilename());
-        try {
-            createDir(entity);
-            File file = new File(getFilePath(entity));
-            if (file.exists()) {
-                return null;
-            }
-            multipartFile.transferTo(file);
-            entity.setPath(file.getPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        entity.setPath(fdfsServiceImpl.uploadFile(multipartFile));
         return super.save(entity);
     }
 
@@ -117,7 +114,7 @@ public class AccessoryServiceImpl extends BaseServiceImpl<Accessory> implements 
     @Override
     public boolean deleteAndFile(String id) {
         Accessory accessory = super.findById(id);
-        deleteFile(accessory);
+        fdfsServiceImpl.deleteFile(accessory.getPath());
         super.deleteById(id);
         return true;
     }
